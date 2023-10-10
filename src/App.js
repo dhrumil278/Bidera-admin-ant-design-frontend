@@ -8,19 +8,29 @@ import AdminForgotPasswordConfirmation from './pages/authentication/adminForgotE
 import AdminForgotPassword from './pages/authentication/adminForgotPassword';
 import AdminVerifyEmail from './pages/authentication/adminVerifyEmail';
 import AdminFirstTimeSetPass from './pages/authentication/adminFirstTimeSetPass';
+import DashboardCompo from './components/DashboardCompo';
 
 function App() {
   return (
     <ConfigProvider
       theme={{
         token: {
-          // colorBgContainer: "#E5F0EA",
+          // colorBgContainer: "#E5F0EA"
           colorPrimary: '#1b7165',
           algorithm: true,
         },
         components: {
           Button: {
             colorPrimary: '#1b7165',
+          },
+          Menu: {
+            itemSelectedBg: '#1b7165',
+            itemSelectedColor: '#ffffff',
+            itemColor: '#1b7165',
+            collapsedWidth: 150,
+          },
+          Popover: {
+            minWidth: 500,
           },
         },
       }}
@@ -54,7 +64,11 @@ function App() {
             />
             {/* <Route path="/forgotPassword" element={<ForgotPassword />} /> */}
             {/* Dashboard routes  */}
-            <Route path="/" element={<Dashboard />} />
+            {/* <Route path="/" element={<Dashboard />} /> */}
+            <Route path="/" element={<Dashboard />}>
+              <Route path="/home" element={<DashboardCompo />} />
+              {/* <Route path="tasks" element={<DashboardTasks />} /> */}
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>
