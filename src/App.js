@@ -9,6 +9,7 @@ import AdminForgotPassword from './pages/authentication/adminForgotPassword';
 import AdminVerifyEmail from './pages/authentication/adminVerifyEmail';
 import AdminFirstTimeSetPass from './pages/authentication/adminFirstTimeSetPass';
 import DashboardCompo from './components/DashboardCompo';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
             {/* <Route path="/" element={<Dashboard />} /> */}
             <Route path="/" element={<Dashboard />}>
               <Route path="/home" element={<DashboardCompo />} />
+              <Route path="/profile" element={<Profile />} />
               {/* <Route path="tasks" element={<DashboardTasks />} /> */}
             </Route>
           </Routes>

@@ -24,7 +24,7 @@ function AdminLogin() {
 
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
-      navigate('/');
+      navigate('/home');
     }
   }, []);
 
@@ -37,7 +37,7 @@ function AdminLogin() {
         if (response.status === 200) {
           localStorage.setItem('accessToken', response.data.data);
           setIsLoading(false);
-          navigate('/');
+          navigate('/home');
         }
       } catch (error) {
         console.log('error: ', error);

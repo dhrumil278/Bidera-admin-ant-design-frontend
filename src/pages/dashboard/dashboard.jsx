@@ -3,6 +3,7 @@ import {
   Breadcrumb,
   Button,
   Col,
+  Divider,
   Dropdown,
   Layout,
   Menu,
@@ -13,11 +14,12 @@ import {
   notification,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Content, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
 import {
   DashboardOutlined,
+  LogoutOutlined,
   UserOutlined,
   UserSwitchOutlined,
 } from '@ant-design/icons';
@@ -25,63 +27,6 @@ import { Typography } from 'antd';
 import DashboardCompo from '../../components/DashboardCompo';
 
 const { Title, Text } = Typography;
-
-const content = (
-  <Row>
-    <Col style={{ display: 'flex' }}>
-      <div>
-        <Avatar
-          size={30}
-          icon={<UserOutlined />}
-          style={{ cursor: 'pointer' }}
-        />
-      </div>
-      <div>
-        <Title level={5}>Dhrumil Amrutiya</Title>
-        <Text>Admin</Text>
-      </div>
-    </Col>
-  </Row>
-);
-
-// const items = [
-//   {
-//     key: '1',
-//     label: (
-//       <a
-//         target="_blank"
-//         rel="noopener noreferrer"
-//         href="https://www.antgroup.com"
-//       >
-//         1st menu item
-//       </a>
-//     ),
-//   },
-//   {
-//     key: '2',
-//     label: (
-//       <a
-//         target="_blank"
-//         rel="noopener noreferrer"
-//         href="https://www.aliyun.com"
-//       >
-//         2nd menu item
-//       </a>
-//     ),
-//   },
-//   {
-//     key: '3',
-//     label: (
-//       <a
-//         target="_blank"
-//         rel="noopener noreferrer"
-//         href="https://www.luohanacademy.com"
-//       >
-//         3rd menu item
-//       </a>
-//     ),
-//   },
-// ];
 
 function Dashboard() {
   const [accessToken, setAccessToken] = useState('');
@@ -101,6 +46,13 @@ function Dashboard() {
       setCollapsed(true);
     }
   };
+  const handleLogout = () => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      localStorage.removeItem('accessToken');
+      navigate('/adminLogin');
+    }
+  };
 
   useEffect(() => {
     // if (message && message !== null && message !== '') {
@@ -117,6 +69,67 @@ function Dashboard() {
     }
   }, []);
 
+  const items = [
+    {
+      key: '1',
+      label: (
+        <Row>
+          <Col
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar size={35} icon={<UserOutlined />} />
+            <div style={{ paddingLeft: 15 }}>
+              <Title level={5} style={{ margin: 0 }}>
+                Dhrumil Amrutiya
+              </Title>
+              <Text style={{ marginBottom: 0 }}>Admin</Text>
+            </div>
+          </Col>
+          <Divider style={{ marginTop: 5, marginBottom: 5 }} />
+        </Row>
+      ),
+      disabled: true,
+    },
+    {
+      key: '2',
+      label: (
+        <Link to="/profile">
+          <Row style={{ padding: 5, cursor: 'pointer', alignItems: 'center' }}>
+            <Col>
+              <UserOutlined style={{ fontSize: 18, fontWeight: 400 }} />
+            </Col>
+            <Col>
+              <Text style={{ marginBottom: 0, fontSize: 14, paddingLeft: 15 }}>
+                Profile
+              </Text>
+            </Col>
+          </Row>
+        </Link>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <Row
+          style={{ padding: 5, cursor: 'pointer', alignItems: 'center' }}
+          onClick={handleLogout}
+        >
+          <Col>
+            <LogoutOutlined style={{ fontSize: 18, fontWeight: 400 }} />
+          </Col>
+          <Col>
+            <Text style={{ marginBottom: 0, fontSize: 14, paddingLeft: 15 }}>
+              Logout
+            </Text>
+          </Col>
+        </Row>
+      ),
+    },
+  ];
   return (
     <div>
       {contextHolder}
@@ -186,18 +199,19 @@ function Dashboard() {
                 <Title level={3} style={{ color: '#1b7165', margin: 0 }}>
                   Bidera Admin
                 </Title>
-                <Popover
+                <Dropdown
+                  menu={{
+                    items,
+                  }}
                   placement="bottomRight"
-                  content={content}
-                  // arrow={mergedArrow}
+                  arrow
                 >
                   <Avatar
                     size={40}
                     icon={<UserOutlined />}
                     style={{ cursor: 'pointer' }}
                   />
-                  {/* <Button>TL</Button> */}
-                </Popover>
+                </Dropdown>
               </Header>
               <Layout
                 style={{
